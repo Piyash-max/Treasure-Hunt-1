@@ -10,10 +10,10 @@ var button,buttonimg;
 function preload(){
  welbg=loadAnimation("images/WelcomeImage.jpg");
  gobg=loadImage("images/GameOver.png");
- ground1=loadAnimation("images/Background1.jpg");
- ground2=loadAnimation("images/Background2.jpg");
- ground3=loadAnimation("images/Background3.jpg");
- ground4=loadAnimation("images/Background4.jpg");
+ ground1=loadImage("images/Background1.jpg");
+ ground2=loadImage("images/Background2.jpg");
+ ground3=loadImage("images/Background3.jpg");
+ ground4=loadImage("images/Background4.jpg");
  skeppy1=loadImage("images/Player1.png");
  skeppy2=loadImage("images/Player2.png");
  skeppy3=loadImage("images/Player3.png");
@@ -36,39 +36,39 @@ function preload(){
 function setup() {
   createCanvas(windowWidth,windowHeight);
   welcome=createSprite(800,370,windowWidth,windowHeight);
-  ground=createSprite(800,370,windowWidth,windowHeight);
-  ground.scale=3.5;
+  welcome.addAnimation("welcome",welbg);
+  welcome.visible=false;
+  welcome.addAnimation("grnd",ground1);
   button=createSprite(800,600);
   button.addImage(buttonimg)
   button.scale=0.5;
-  skeppy=createSprite(50,height-10,50,50);
+  button.visible=false;
+ 
 }
 
 function draw() {
-  background(255,255,255);  
-  if(gameSate==="Welcome"){
-    welcome.addAnimation("Welcome",welbg);
-    if(mousePressedOver(button)){
-      ground.addAnimation("grnd",ground1);
-      skeppy.addImage(skeppy1);
-      welcome.visible=false;
-      button.visible=false;
-      gameSate="Play";
-   }
-  } 
-  
-  else if(gameSate==="Play"){
-    ground.velocityX=-4;
-    if(ground.x < 700){
-      ground.x=ground.width/2;
-      skeppy.addImage(skeppy1);
-      ground.addAnimation("grnd",ground1);
-
+  background(ground1);  
+  if(gameSate==="WELCOME"){
+    welcome.visible=true;
+    button.visible=true;
+  if(mousePressedOver(button)){
+    gameSate="PLAY";
   }
- 
-  
-  
-  drawSprites();
- 
 }
+ if(gameSate==="PLAY"){
+  welcome.visible=false;
+  button.visible=false;
+  skeppy=createSprite(200,height-170,50,50);
+  skeppy.addImage("player1",skeppy4);
+  skeppy.scale=0.75; 
+
+  
+  if(keyDown(UP_ARROW)){
+    skeppy.y=skeppy.y-10;
+  }
+  if(keyDown(DOWN_ARROW)){
+    skeppy.y=skeppy.y+10;   
+  }
+}
+  drawSprites();
 }
